@@ -57,6 +57,28 @@ function statement(invoice, plays) {
   return generateTxtResult(invoice, volumeCredits, totalAmount,plays);
 }
 
+function statementHtml(invoice, plays) {
+  let volumeCredits = 0;
+  let totalAmount=0;
+  volumeCredits = getvolumeCredits(invoice, plays);
+  totalAmount=getTotalAmount(invoice,plays);
+  return generateHtmlResult(invoice, volumeCredits, totalAmount,plays);
+}
+
+function generateHtmlResult(invoice, volumeCredits, totalAmount,plays){
+  let result=`<h1>Statement for ${invoice.customer}</h1>\n` +
+  '<table>\n' +
+  '<tr><th>play</th><th>seats</th><th>cost</th></tr>';
+  for (let perf of invoice.performances) {
+    const play = playFor(plays, perf);
+    result+=`<tr><td>${play.name}</td><td>${perf.audience}</td><td>${usd(getAmount(play, perf))}</td></tr>\n`;
+  }
+  result+='</table>\n' +
+  `<p>Amount owed is <em>${usd(totalAmount)}</em></p>\n` +
+  `<p>You earned <em>${volumeCredits}</em> credits</p>\n`;
+  return result;
+}
+
 function playFor(plays, perf) {
   return plays[perf.playID];
 }
@@ -73,4 +95,5 @@ function getvolumeCredits(invoice, plays) {
 
 module.exports = {
   statement,
+  statementHtml
 };

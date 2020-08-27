@@ -1,5 +1,5 @@
 const test = require('ava');
-const { statement } = require('../src/statement');
+const { statement,statementHtml } = require('../src/statement');
 
 test('test1', t => {
   //given
@@ -198,7 +198,7 @@ test('test7', t => {
       'type': 'tragedy'
     }
   }
-  const result = statement(invoice, plays);
+  const result = statementHtml(invoice, plays);
   t.is(result, '<h1>Statement for BigCo</h1>\n' +
     '<table>\n' +
     '<tr><th>play</th><th>seats</th><th>cost</th></tr>' +
