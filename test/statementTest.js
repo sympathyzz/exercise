@@ -142,35 +142,6 @@ test('test6', t => {
   t.is(result,'Statement for BigCo\n As You Like It: $540.00 (30 seats)\n Othello: $500.00 (40 seats)\nAmount owed is $1,040.00\nYou earned 16 credits \n');
 });
 
-test('test6', t => {
-  //given
-  const invoice = {
-    'customer': 'BigCo',
-    'performances': [
-      {
-        'playID': 'as-like',
-        'audience': 30
-      }
-    ]
-  }
-  const plays = {
-
-    'as-like': {
-      'name': 'As You Like It',
-      'type': 'comedy1'
-    },
-    'othello': {
-      'name': 'Othello',
-      'type': 'tragedy'
-    }
-  }
-  try {
-    statement(invoice, plays)
-  } catch (error) {
-    t.is('unknown type: comedy1',error.message)
-  }
-});
-
 
 test('test7', t => {
   //given
