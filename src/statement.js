@@ -29,7 +29,15 @@ function getAmount(play, perf) {
   return thisAmount;
 }
 
-
+function generateTxtResult(invoice, volumeCredits, totalAmount,plays) {
+  let result = `Statement for ${invoice.customer}\n`;
+  for (let perf of invoice.performances) {
+    const play = playFor(plays, perf);
+    result+=` ${play.name}: ${usd(getAmount(play, perf))} (${perf.audience} seats)\n`
+  }
+  result+=`Amount owed is ${usd(totalAmount)}\nYou earned ${volumeCredits} credits \n`;
+  return result;
+}
 
 function statement(invoice, plays) {
   let totalAmount = 0;
@@ -38,13 +46,10 @@ function statement(invoice, plays) {
   for (let perf of invoice.performances) {
     const play = playFor(plays, perf);
     thisAmount = getAmount(play, perf);
-    result += ` ${play.name}: ${usd(thisAmount)} (${perf.audience} seats)\n`;
     totalAmount += thisAmount;
   }
   volumeCredits = getvolumeCredits(invoice, plays);
-  result += `Amount owed is ${usd(totalAmount)}\n`;
-  result += `You earned ${volumeCredits} credits \n`;
-  return result;
+  return generateTxtResult(invoice, volumeCredits, totalAmount,plays);
 }
 
 function playFor(plays, perf) {
