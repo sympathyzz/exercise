@@ -31,11 +31,7 @@ function statement (invoice, plays) {
       default:
         throw new Error(`unknown type: ${play.type}`);
     }
-    // add volume credits
-    volumeCredits += Math.max(perf.audience - 30, 0);
-    // add extra credit for every ten comedy attendees
-    if ('comedy' === play.type) volumeCredits += Math.floor(perf.audience / 5);
-    //print line for this order
+    volumeCredits+=countCredits(perf.audience,play);
     result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
     totalAmount += thisAmount;
   }
@@ -43,7 +39,12 @@ function statement (invoice, plays) {
   result += `You earned ${volumeCredits} credits \n`;
   return result;
 }
-
+function countCredits(audience,play){
+  let credits=0;
+  credits += Math.max(audience - 30, 0);
+    if ('comedy' === play.type) credits += Math.floor(audience / 5);
+    return credits
+}
 module.exports = {
   statement,
 };
