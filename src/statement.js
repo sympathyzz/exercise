@@ -39,16 +39,21 @@ function generateTxtResult(invoice, volumeCredits, totalAmount,plays) {
   return result;
 }
 
-function statement(invoice, plays) {
+function getTotalAmount(invoice,plays){
   let totalAmount = 0;
-  let volumeCredits = 0;
-  let result = `Statement for ${invoice.customer}\n`;
   for (let perf of invoice.performances) {
     const play = playFor(plays, perf);
     thisAmount = getAmount(play, perf);
     totalAmount += thisAmount;
   }
+  return totalAmount;
+}
+
+function statement(invoice, plays) {
+  let volumeCredits = 0;
+  let totalAmount=0;
   volumeCredits = getvolumeCredits(invoice, plays);
+  totalAmount=getTotalAmount(invoice,plays);
   return generateTxtResult(invoice, volumeCredits, totalAmount,plays);
 }
 
