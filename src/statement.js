@@ -37,20 +37,25 @@ function statement (invoice, plays) {
   for (let perf of invoice.performances) {
 	const play = plays[perf.playID];
 	thisAmount=getAmount(play,perf);
-    volumeCredits+=countCredits(perf.audience,play);
     result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
     totalAmount += thisAmount;
   }
+  volumeCredits=getvolumeCredits(invoice,plays);
   result += `Amount owed is ${format(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits \n`;
   return result;
 }
-function countCredits(audience,play){
-  let credits=0;
-  credits += Math.max(audience - 30, 0);
-    if ('comedy' === play.type) credits += Math.floor(audience / 5);
-    return credits
+
+function getvolumeCredits(invoice,plays){
+  let volumeCredits=0;
+  for (let perf of invoice.performances) {
+    const play = plays[perf.playID];
+    volumeCredits+=Math.max(perf.audience - 30, 0);
+    if ('comedy' === play.type) volumeCredits += Math.floor(perf.audience / 5);
+  }
+  return volumeCredits;
 }
+
 module.exports = {
   statement,
 };
