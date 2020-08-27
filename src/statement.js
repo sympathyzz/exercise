@@ -6,13 +6,8 @@ function usd(){
   }).format;
 }
 
-function statement (invoice, plays) {
-  let totalAmount = 0;
-  let volumeCredits = 0;
-  let result = `Statement for ${invoice.customer}\n`;
-  const format = usd();
-  for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
+
+function getAmount(play,perf){
     let thisAmount = 0;
     switch (play.type) {
       case 'tragedy':
@@ -30,7 +25,18 @@ function statement (invoice, plays) {
         break;
       default:
         throw new Error(`unknown type: ${play.type}`);
-    }
+	}
+	return thisAmount;
+}
+
+function statement (invoice, plays) {
+  let totalAmount = 0;
+  let volumeCredits = 0;
+  let result = `Statement for ${invoice.customer}\n`;
+  const format = usd();
+  for (let perf of invoice.performances) {
+	const play = plays[perf.playID];
+	thisAmount=getAmount(play,perf);
     volumeCredits+=countCredits(perf.audience,play);
     result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
     totalAmount += thisAmount;
