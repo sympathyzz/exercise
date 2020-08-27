@@ -35,7 +35,7 @@ function statement (invoice, plays) {
   let result = `Statement for ${invoice.customer}\n`;
   const format = usd();
   for (let perf of invoice.performances) {
-	const play = plays[perf.playID];
+	const play = playFor(plays,perf);
 	thisAmount=getAmount(play,perf);
     result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
     totalAmount += thisAmount;
@@ -46,10 +46,14 @@ function statement (invoice, plays) {
   return result;
 }
 
+function playFor(plays,perf){
+    return plays[perf.playID];
+}
+
 function getvolumeCredits(invoice,plays){
   let volumeCredits=0;
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
+    const play = playFor(plays,perf);
     volumeCredits+=Math.max(perf.audience - 30, 0);
     if ('comedy' === play.type) volumeCredits += Math.floor(perf.audience / 5);
   }
