@@ -1,7 +1,7 @@
 const test = require('ava');
 const { statement,statementHtml } = require('../src/statement');
 
-test('test1', t => {
+test('test2:customer BigCo with a performance 20 hamlet', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -23,7 +23,7 @@ test('test1', t => {
   t.is(result,'Statement for BigCo\n Hamlet: $400.00 (20 seats)\nAmount owed is $400.00\nYou earned 0 credits \n');
 });
 
-test('test2', t => {
+test('test3:customer BigCo with a performance 40 hamlet', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -45,7 +45,7 @@ test('test2', t => {
   t.is(result,'Statement for BigCo\n Hamlet: $500.00 (40 seats)\nAmount owed is $500.00\nYou earned 10 credits \n');
 });
 
-test('test3', t => {
+test('test4:customer BigCo with a performance 31 hamlet', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -67,7 +67,7 @@ test('test3', t => {
   t.is(result,'Statement for BigCo\n Hamlet: $410.00 (31 seats)\nAmount owed is $410.00\nYou earned 1 credits \n');
 });
 
-test('test4', t => {
+test('test5:customer BigCo with a performance 10 as-like', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -89,7 +89,7 @@ test('test4', t => {
   t.is(result,'Statement for BigCo\n As You Like It: $330.00 (10 seats)\nAmount owed is $330.00\nYou earned 2 credits \n');
 });
 
-test('test5', t => {
+test('test6:customer BigCo with a performance 30 as-like', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -111,7 +111,7 @@ test('test5', t => {
   t.is(result,'Statement for BigCo\n As You Like It: $540.00 (30 seats)\nAmount owed is $540.00\nYou earned 6 credits \n');
 });
 
-test('test6', t => {
+test('test7:customer BigCo with two performance 30 as-like and 40 othello', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -143,7 +143,7 @@ test('test6', t => {
 });
 
 
-test('test7', t => {
+test('test8:customer BigCo with a performance 30 as-like 40 othello to html', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
