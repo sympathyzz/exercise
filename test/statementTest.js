@@ -1,6 +1,16 @@
 const test = require('ava');
 const { statement,statementHtml } = require('../src/statement');
 
+test('test1:customer BigCo without performances', t => {
+  //given
+  const invoice = {
+    'customer': 'BigCo',
+    'performances': []
+  }
+  const result = statement(invoice, plays);
+
+  t.is(result,'Statement for BigCo\nAmount owed is $0.00\nYou earned 0 credits \n');
+});
 
 test('test2:customer BigCo with a performance 20 hamlet', t => {
   //given
